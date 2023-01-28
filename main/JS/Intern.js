@@ -1,11 +1,11 @@
-const employee=require("./Assets/Test/JS/Employee")
+const Employee=require("./Employee")
 
-class intern extends employee{
+class Intern extends Employee{
     constuctor(name,employeeId,email,school){
-        super(name,employeeId,email);
+       super(name,employeeId,email)
             this.school=school;
         }
     }
 
-    module.exports=intern;
+    module.exports=Intern;
     

@@ -26,7 +26,7 @@ const questions=[
 {
     type:"input",
     message:"What is your office number",
-    name:"Office-Number"
+    name:"Office"
     when: questions=>(questions.choices=== "Manager"),
 }
 {
