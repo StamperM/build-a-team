@@ -3,6 +3,6 @@ const Manager=require("./Manager");
 // office number is the length of 10
 test("lenth of office number should be ten", ()=>
 
-expect(manager.office).toHaveLenght(10);
+expect(Manager.office).toHaveLenght(10)
 )
 
