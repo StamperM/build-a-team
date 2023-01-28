@@ -42,3 +42,5 @@ const questions=[
     when: questions=>(questions.choices=== "Engineer"),
 }
 ]
+
+module.exports=questions;
