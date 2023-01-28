@@ -1,4 +1,4 @@
-const employee=require("./Employee")
+const Employee=require("./Employee")
 const engineerTest=require("./test/Engineer.test")
 
 class Engineer extends Employee{

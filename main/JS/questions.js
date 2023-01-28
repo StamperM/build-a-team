@@ -1,7 +1,8 @@
-const inguier = require("inquirer");
+const inquirer = require("inquirer");
 
 
-const questions=[
+inquirer
+.prompt([
     {
         type:"input",
         message:"What is the employee name?",
@@ -26,21 +27,24 @@ const questions=[
 {
     type:"input",
     message:"What is your office number",
-    name:"Office"
+    name:"office"
     when: questions=>(questions.choices=== "Manager"),
 }
 {
     type:"input",
     message:"What is the employee's GitHub username?",
-    name:"GitHub"
+    name:"github"
     when: questions=>(questions.choices=== "Engineer"),
 }
 {
     type:"input",
     message:"What is school does the intern attend?",
-    name:"School"
+    name:"school"
     when: questions=>(questions.choices=== "Engineer"),
 }
-]
+])
+.then((answers)=>{
+    console.log(answers);
+})
 
 module.exports=questions;

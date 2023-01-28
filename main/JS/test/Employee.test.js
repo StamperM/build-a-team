@@ -1,4 +1,4 @@
-const Employee= require("./Employee.js")
+const Employee= require("./")
 // name can not be empty
 test('Name can not be empty',()=>{
 // setup

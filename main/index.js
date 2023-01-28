@@ -1,13 +1,13 @@
 const fs=require("fs")
 const Employee= require("./JS/Employee");
-const Intern = require("./JS/Intern");
+// const Intern = require("./JS/Intern");
 const Engineer =require("./JS/Engineer");
 const Manager = require("./JS/Manager");
 const questions=require("./JS/questions");
 const { inherits } = require("util");
 const { default: inquirer } = require("inquirer");
 
-const teamBuildHTML =
+const teamBuildHTML = require("./src/generateHTML")
 
 // function writeHtml(){
 // fs.writeFile("/dist/main.html",teamBuildHTML, err=>{
@@ -28,5 +28,7 @@ function init(){
     })
 
 }
+function init(){
 
+}
 init()
