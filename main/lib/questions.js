@@ -23,6 +23,7 @@ inquirer
     type:"list",
     message:"What is the emplyee role?",
     choices:["Manager","Engineer","Intern"],
+    name:"role",
 },
 {
     type:"input",
