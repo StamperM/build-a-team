@@ -17,29 +17,35 @@ const questions=[
     name:"email",
 },
 {
-    type:"list",
-    message:"What is the emplyee role?",
-    choices:["Manager","Engineer","Intern"],
-    name:"role",
+    type:"confirm",
+    message:"What is this a manager",
+    choices:"Manager",
+    name:"manager",
 },
+{
+    type:"confirm",
+    message:"What is this a Engineer",
+    name:"engineer",
+},
+
 {
     type:"input",
     message:"What is your office number",
     name:"office",
-    when: questions=>(questions.choices=== "Manager"),
+    when: answers=>(answers.manager=== true),
 },
 {
     type:"input",
     message:"What is the employee's GitHub username?",
     name:"github",
-    when: questions=>(questions.choices=== "Engineer"),
+    when: answers=>(answers.engineer=== true),
 },
 {
     type:"input",
     message:"What is school does the intern attend?",
     name:"school",
-    when: questions=>(questions.choices=== "Engineer"),
+    when:  answers=>(answers.engineer=== false && answers.manager=== false)
 },
 ]
 
-module.exports=questions;
+module.exports=questions

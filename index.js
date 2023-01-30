@@ -28,7 +28,7 @@ const prompt = inquirer.createPromptModule();
 // })
 
 function employeeInfo(){
-    const EmployeeInfo = new Employee(answers.name, answers.id, answers.email,answers.role,)
+    const managerinfo = new Manager(answers.name, answers.id, answers.email,answers.role, answer.office);
 }
 // create a card for an engineer for the HTML template.
 // function createEngineer(){
@@ -40,6 +40,8 @@ function employeeInfo(){
 function init(){
     inquirer.prompt(questions).then(answers => {
         console.log(answers);
+       
+        employeeInfo();
     //     fs.writeFile("/dist/main.html",teamBuildHTML, err=>{
     //         if (err) {
     //             console.log(err);
@@ -50,9 +52,9 @@ function init(){
     })
 }
 
-function init(){
+// function init(){
 
-}
+// }
 init()
 
 // function writeHtml(){
