@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "test": "jest --verbose test/*"
+    "test": "jest --verbose test/*",
+    "format":"npx prettier --write ."
   },
   "dependencies": {
     "inquirer": "^8.2.4",
