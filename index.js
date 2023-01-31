@@ -9,27 +9,38 @@ const Engineer =require("./lib/Engineer");
 const questions = require('./lib/questions');
 const Manager = require("./lib/Manager.js").default;
 const prompt = inquirer.createPromptModule();
-// start program(loop it when yes)
-// collect employee information, store an array of employee object
+// start program
+
 // write to the HTML file build the start content 
-// end program
-const employeList=[];
 
+// collect employee information, store an array of employee object
+const employeeList=[];
+const newEmployee =(answers) =>{
+    if(answers.manager===true){
+        return new Manager(answers.name,answers.id,answers.email,answers.office);   
+    
+    }else if(answers.engineer===true){
+       return new Engineer(answers.name,answers.id,answers.email,answers.github);
+       
+} else (answers.manager===false && answers.engineer ===false)
+   return new Manager(answers.name,answers.id,answers.email,answers.office);
 
-function employeeInfo(){
-    const managerinfo = new Employee(name,id,email);
 }
+
 // create a card for an engineer for the HTML template.
 
 
 // }
 function init(){
     inquirer.prompt(questions).then(answers => {
-        console.log(answers);
+       for(i=0;i<answers.length(); i++){
+        const employee= newEmployee(answers[i])
+        employeeList.append(employee)
+       }
+      
       
       
         
-        employeeInfo();
     //     fs.writeFile("/dist/main.html",teamBuildHTML, err=>{
     //         if (err) {
     //             console.log(err);
@@ -44,7 +55,7 @@ function init(){
 
 // }
 init()
-
+// end program
 // function writeHtml(){
 // fs.writeFile("/dist/main.html",teamBuildHTML, err=>{
 //     if (err) {

@@ -3,7 +3,9 @@ const Intern = require("./JS/Intern");
 const Manager = require("./JS/Manager");
 
 const managerCard=(answers)=>{
-   return `<div class="container">
+
+   
+  `<div class="container">
     <div class="row">
     <h2 class="employeeName">${answers.name}</h2>
     <h3 class="employeeRole">${answers.role}</h3>
