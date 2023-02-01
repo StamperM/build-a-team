@@ -1,8 +1,5 @@
-const Employee=require("./Employee.js.js");
-const Manager=require("./Manager");
+const Employee = require("./Employee.js.js");
+const Manager = require("./Manager");
 // office number is the length of 10
-test("lenth of office number should be ten", ()=>
-
-expect(Manager.office).toHaveLenght(10)
-)
-
+test("lenth of office number should be ten", () =>
+  expect(Manager.office).toHaveLenght(10));
