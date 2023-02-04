@@ -5,14 +5,11 @@ const Employee = require("./lib/Employee")
 const Intern = require("./lib/Intern");
 const Engineer = require("./lib/Engineer");
 // the questions for inquirer
-const questions = require("./lib/questions");
+const questions = require("./lib/questions.js");
 const Manager = require("./lib/Manager.js");
 const prompt = inquirer.createPromptModule();
-const { renderEmployee, myTeamHeader } = require("./src/generateHTML");
+const { renderEmployee, myTeamHeader } = require("./src/generateHTML")
 inquirer.registerPrompt("loop", require("inquirer-loop")(inquirer));
-
-const body = "";
-
 // start program
 
 // write to the HTML file build the start content
@@ -21,24 +18,25 @@ const body = "";
 const employeeList = [];
 
 // will create new employees
-// const newEmployee = (answers) => {
-//   if (.answers.defineRole === "Manager") {
-//     const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
-//     return employeeList.push(employee);
-//   } else if (enterEmployee.answers.defineRole === "Engineer") {
-//     const employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
-//     return employeeList.push(employee);
-//   } else if (enterEmployee.answers.defineRole === "Intern") {
-//     const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
-//     return employeeList.push(employee);
-//   }
+const newEmployee = (answers) => {
+  if (answers.engineer.defineRole === "Manager") {
+    const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
+    return employeeList.push(employee);
+  } else if (answers.engineer.defineRole === "Engineer") {
+    const employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
+    return employeeList.push(employee);
+  } else if (answers.engineer.defineRole === "Intern") {
+    const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
+    return employeeList.push(employee);
+  }
 
-// }
-
-
-function renderEmployees(employees) {
-  return employees.map((employee) => renderEmployee(employee)).join("");
 }
+
+
+
+
+
+
 // create a card for an engineer for the HTML template.
 
 inquirer.prompt(questions).then(
