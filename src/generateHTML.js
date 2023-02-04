@@ -1,11 +1,14 @@
-const Employee =require("./lib/Employee.js")
-const Engineer = require("./lib/Engineer.js");
-const Intern = require("./JS/Intern.js");
-const Manager = require("./JS/Manager.js");
+// const Employee = require("./lib/Employee")
+// const Intern = require("./lib/Intern");
+// const Engineer = require("./lib/Engineer");
+// const Manager = require("./lib/Manager.js");
 
+const Engineer = require("../lib/Engineer");
+const Intern = require("../lib/Intern");
+const Manager = require("../lib/Manager");
 
-const myTeamHeader=()=>{ 
-    return `<nav><h1> My Team</h1></nav>` } 
+const myTeamHeader=
+     `<nav><h1> My Team</h1></nav>` 
 
 
 const managerCard = (Manager) => {
@@ -24,13 +27,14 @@ const managerCard = (Manager) => {
 </div>
 </div>`;
 };
-function renderEmployee(employee){
-    if(employee.role==="manager"){
-        return managerCard(employee);
-    } if(employee.role==="engineer"){
-        return engineerCard(employee);
-    }if(employee.role === "intern"){
-        return internCard(employee)
+
+function renderEmployee(Employee){
+    if(Employee.role=== "Manager"){
+        return managerCard(Employee);
+    } if(Employee.role=== "Engineer"){
+        return engineerCard(Employee);
+    }if(Employee.role === "Intern"){
+        return internCard(Employee)
     }
 }
 
@@ -71,8 +75,8 @@ const internCard =(Intern)=>{
 
 module.exports={
   myTeamHeader,
-    renderEmployee
-
+    renderEmployee,
+    internCard
 }
 
 ;
