@@ -38,7 +38,7 @@ const newEmployee = (answers) => {
  employeeList.forEach((employee) =>{
   console.log(employee);
    html = renderEmployee(employeeList);
-  const toBuildHtml=`${myTeamHeader}+ ${renderEmployee}`;
+  const buildHtml=`${myTeamHeader}+ ${renderEmployee}`;
  
  });
 }
@@ -57,7 +57,7 @@ inquirer.prompt(questions).then(
      }
     )
 
-    writeHtml= ()=>{ fs.writeFileSync("./dist/index.html", html, "utf8", err => {
+    writeHtml= ()=>{ fs.writeFileSync("./dist/index.html", buildHtml, "utf8", err => {
     if (err) {
       console.log(err);
     }
