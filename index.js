@@ -8,7 +8,7 @@ const Engineer = require("./lib/Engineer");
 const questions = require("./lib/questions.js");
 const Manager = require("./lib/Manager.js");
 const prompt = inquirer.createPromptModule();
-const { renderEmployee, myTeamHeader } = require("./src/generateHTML")
+const {renderEmployee, myTeamHeader } = require("./src/generateHTML")
 inquirer.registerPrompt("loop", require("inquirer-loop")(inquirer));
 // start program
 
@@ -34,6 +34,14 @@ const newEmployee = (answers) => {
 
 
 
+  function createHtml(employeeList){
+ employeeList.forEach((employee) =>{
+  console.log(employee);
+   html = renderEmployee(employeeList);
+  const toBuildHtml=`${myTeamHeader}+ ${renderEmployee}`;
+ 
+ });
+}
 
 
 
@@ -42,23 +50,19 @@ const newEmployee = (answers) => {
 inquirer.prompt(questions).then(
   (answers) => {
     console.log(answers);
-  //   newEmployee(answers);
-  //   console.log(employeeList);
-  //   renderEmployees(employeeList);
-  //   console.log()
-  //  html =`${myTeamHeader}+ ${renderEmployee.value}`;
-  //   fs.writeFileSync("./dist/index.html", html, "utf8", err => {
-  //     if (err) {
-  //       console.log(err);
-  //     }
-      // }); 
+    newEmployee(answers);
+    console.log(employeeList);
+   
+    createHtml(employeeList);
      }
     )
 
- 
-	
-	 
-
+    writeHtml= ()=>{ fs.writeFileSync("./dist/index.html", html, "utf8", err => {
+    if (err) {
+      console.log(err);
+    }
+    }); }
+   
 
 
 
