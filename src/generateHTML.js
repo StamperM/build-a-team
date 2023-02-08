@@ -7,12 +7,12 @@ const Engineer = require("../lib/Engineer");
 const Intern = require("../lib/Intern");
 const Manager = require("../lib/Manager");
 
-const myTeamHeader=
-     `<nav><h1> My Team</h1></nav>` 
+const myTeamHeader =
+    `<nav><h1> My Team</h1></nav>`
 
 
 const managerCard = (Manager) => {
- return `<div class="container">
+    return `<div class="container">
     <div class="row">
     <h2 class="employeeName">${Manager.name}</h2>
     <h3 class="employeeRole">${Manager.role}</h3>
@@ -28,18 +28,20 @@ const managerCard = (Manager) => {
 </div>`;
 };
 
-function renderEmployee(Employee){
-    if(Employee.role=== "Manager"){
-        return managerCard(Employee);
-    } if(Employee.role=== "Engineer"){
-        return engineerCard(Employee);
-    }if(Employee.role === "Intern"){
-        return internCard(Employee)
+
+function renderEmployee(Employee) {
+    let htmlBody = "";
+    if (Manager.role === "Manager") {
+        return `${htmlBody}+ ${managerCard(Employee)}`;
+    } if (Engineer.role === "Engineer") {
+        return `${htmlBody} + ${engineerCard(Employee)}`;
+    } if (Intern.role === "Intern") {
+        return `${htmlBody} + ${internCard(Employee)}`;
     }
 }
 
-const engineerCard =(Engineer)=>{
-`<div class="container">
+const engineerCard = (Engineer) => {
+    `<div class="container">
     <div class="row">
     <h2 class="employeeName">${Engineer.name}</h2>
     <h3 class="employeeRole">${Engineer.role}</h3>
@@ -56,8 +58,8 @@ const engineerCard =(Engineer)=>{
 };
 
 
-const internCard =(Intern)=>{
-`<div class="container">
+const internCard = (Intern) => {
+    `<div class="container">
     <div class="row">
     <h2 class="employeeName">${Intern.name}</h2>
     <h3 class="employeeRole">${Intern.role}</h3>
@@ -73,10 +75,10 @@ const internCard =(Intern)=>{
 </div>`};
 
 
-module.exports={
-  myTeamHeader,
+module.exports = {
+    myTeamHeader,
     renderEmployee,
     internCard
 }
 
-;
+    ;

@@ -8,9 +8,10 @@ const Engineer = require("./lib/Engineer");
 const questions = require("./lib/questions.js");
 const Manager = require("./lib/Manager.js");
 const prompt = inquirer.createPromptModule();
-const {renderEmployee, myTeamHeader } = require("./src/generateHTML")
+const { renderEmployee, myTeamHeader } = require("./src/generateHTML")
+let htmlBody = "";
 inquirer.registerPrompt("loop", require("inquirer-loop")(inquirer));
-// start program
+
 
 // write to the HTML file build the start content
 
@@ -19,13 +20,13 @@ const employeeList = [];
 
 // will create new employees
 const newEmployee = (answers) => {
-  if (answers.engineer.defineRole === "Manager") {
+  if (answers.defineRole === "Manager") {
     const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
     return employeeList.push(employee);
-  } else if (answers.engineer.defineRole === "Engineer") {
+  } else if (answers.defineRole === "Engineer") {
     const employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
     return employeeList.push(employee);
-  } else if (answers.engineer.defineRole === "Intern") {
+  } else if (answers.defineRole === "Intern") {
     const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
     return employeeList.push(employee);
   }
@@ -33,40 +34,46 @@ const newEmployee = (answers) => {
 }
 
 
+function html(employeeList) {
+  const basketball = employeeList.forEach(renderEmployee());
 
-  function createHtml(employeeList){
- employeeList.forEach((employee) =>{
-  console.log(employee);
-   html = renderEmployee(employeeList);
-  const buildHtml=`${myTeamHeader}+ ${renderEmployee}`;
- 
- });
+  console.log(basketball);
+  htmlpage = `${myTeamHeader} ${basketball}`
+
+}
+
+
+// create a card for an engineer for the HTML template.
+function inquirerQuestions() {
+  inquirer.prompt(questions).then(
+    (answers) => {
+      // this will create an employee and and push it to the employee list.
+      answers.engineer.forEach(newEmployee);
+      console.log("this is the list", employeeList);
+      // should create a card for each employee.
+      html(employeeList)
+
+      fs.writeFile("./dist/index.html", htmlpage, "utf8", err => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    })
 }
 
 
 
-// create a card for an engineer for the HTML template.
-
-inquirer.prompt(questions).then(
-  (answers) => {
-    console.log(answers);
-    newEmployee(answers);
-    console.log(employeeList);
-   
-    createHtml(employeeList);
-     }
-    )
-
-    writeHtml= ()=>{ fs.writeFileSync("./dist/index.html", buildHtml, "utf8", err => {
-    if (err) {
-      console.log(err);
-    }
-    }); }
-   
 
 
 
-function init() {};
+
+
+
+// start program
+function init() {
+  inquirerQuestions();
+
+};
 
 init();
 // end program
