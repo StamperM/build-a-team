@@ -35,13 +35,20 @@ const newEmployee = (answers) => {
 
 
 function html(employeeList) {
-  const basketball = employeeList.forEach(renderEmployee());
-
-  console.log(basketball);
-  htmlpage = `${myTeamHeader} ${basketball}`
+  let basketball = employeeList.map(renderEmployee);
+let htmlBody=`${myTeamHeader} ${basketball}`
+writeHTML(htmlBody);
 
 }
 
+function createHtml(employeeList){
+  employeeList.forEach((employee) =>{
+   console.log(employee);
+    html = renderEmployee(employeeList);
+    htmlBody =`${myTeamHeader}+ ${renderEmployee}`;
+  return htmlBody
+  });
+ }
 
 // create a card for an engineer for the HTML template.
 function inquirerQuestions() {
@@ -51,20 +58,22 @@ function inquirerQuestions() {
       answers.engineer.forEach(newEmployee);
       console.log("this is the list", employeeList);
       // should create a card for each employee.
-      html(employeeList)
+      html(employeeList);
 
-      fs.writeFile("./dist/index.html", htmlpage, "utf8", err => {
-        if (err) {
-          console.log(err);
-        }
-      });
-    })
+    
+        })
+      }
+      
+
+
+const writeHTML= ()=>{
+  fs.writeFile("./dist/index.html", htmlBody, "utf8", err => {
+    if (err) {
+      console.log(err);
 }
 
-
-
-
-
+  })
+}
 
 
 
@@ -72,7 +81,7 @@ function inquirerQuestions() {
 // start program
 function init() {
   inquirerQuestions();
-
+writeHTML()
 };
 
 init();
