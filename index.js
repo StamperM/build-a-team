@@ -1,88 +1,87 @@
+// @ts-check
 const inquirer = require("inquirer");
-// fs require will allow me to use the built in filestore for node
 const fs = require("fs");
-const Employee = require("./lib/Employee")
-const Intern = require("./lib/Intern");
-const Engineer = require("./lib/Engineer");
+
+const { Employee } = require("./lib/Employee");
+const { Intern } = require("./lib/Intern");
+const { Engineer } = require("./lib/Engineer");
+const { Manager } = require("./lib/Manager.js");
+
 // the questions for inquirer
 const questions = require("./lib/questions.js");
-const Manager = require("./lib/Manager.js");
-const prompt = inquirer.createPromptModule();
-const { renderEmployee, myTeamHeader } = require("./src/generateHTML")
-let htmlBody = "";
+
+inquirer.createPromptModule();
 inquirer.registerPrompt("loop", require("inquirer-loop")(inquirer));
 
+/**
+ * @typedef {Object} Answers
+ * @property {string} name
+ * @property {string} id
+ * @property {string} email
+ * @property {"Manager" | "Engineer" | "Intern"} defineRole
+ * @property {string | undefined} office
+ * @property {string | undefined} github
+ * @property {string | undefined} school
+ */
 
-// write to the HTML file build the start content
-
-// collect employee information, store an array of employee object
-const employeeList = [];
-
-// will create new employees
+/**
+ * will create new employees
+ * @param {Answers} answers
+ * @returns {Employee}
+ */
 const newEmployee = (answers) => {
-  if (answers.defineRole === "Manager") {
-    const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
-    return employeeList.push(employee);
-  } else if (answers.defineRole === "Engineer") {
-    const employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
-    return employeeList.push(employee);
-  } else if (answers.defineRole === "Intern") {
-    const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
-    return employeeList.push(employee);
+  const employee = answers.defineRole === "Manager" ? new Manager(answers.name, answers.id, answers.email, answers.office) 
+    : answers.defineRole === "Engineer" ? new Engineer(answers.name, answers.id, answers.email, answers.github) 
+    : answers.defineRole === "Intern" ? new Intern(answers.name, answers.id, answers.email, answers.school) 
+    : null;
+
+  if (!employee) {
+    throw new Error("Invalid employee type")
   }
 
-}
+  return employee
+};
 
+/**
+ * @param {Employee[]} employees 
+ */
+function writeHTML (employees)  {
+  const teamHeader = `<nav><h1> My Team</h1></nav>`;
+  const employeeCards = employees.map((employee) => employee.render()).join(" ");
+  const htmlBody = `${teamHeader} ${employeeCards}`;
 
-function html(employeeList) {
-  let basketball = employeeList.map(renderEmployee);
-let htmlBody=`${myTeamHeader} ${basketball}`
-writeHTML(htmlBody);
-
-}
-
-function createHtml(employeeList){
-  employeeList.forEach((employee) =>{
-   console.log(employee);
-    html = renderEmployee(employeeList);
-    htmlBody =`${myTeamHeader}+ ${renderEmployee}`;
-  return htmlBody
+  console.log(htmlBody)
+  
+  fs.writeFile("./dist/index.html", htmlBody, "utf8", (error) => {
+    if (error) {
+      console.log(error);
+      throw error
+    }
   });
- }
-
-// create a card for an engineer for the HTML template.
-function inquirerQuestions() {
-  inquirer.prompt(questions).then(
-    (answers) => {
-      // this will create an employee and and push it to the employee list.
-      answers.engineer.forEach(newEmployee);
-      console.log("this is the list", employeeList);
-      // should create a card for each employee.
-      html(employeeList);
-
-    
-        })
-      }
-      
-
-
-const writeHTML= ()=>{
-  fs.writeFile("./dist/index.html", htmlBody, "utf8", err => {
-    if (err) {
-      console.log(err);
 }
-
-  })
-}
-
-
-
 
 // start program
-function init() {
-  inquirerQuestions();
-writeHTML()
-};
+async function init() {
+  /**
+   * @typedef {Object} Response
+   * @property {Answers[]} employees
+   */
+
+  /* @type {Response} */
+  const answers = await inquirer.prompt(questions)
+
+  /* @type {Answers[]} */
+  const employeeAnswers = answers.employees;
+
+  // this will create an employee and and push it to the employee list.
+  /* @type {Employee[]} */
+  const employees = employeeAnswers.map(newEmployee);
+
+  console.log("this is the list", employees);
+
+  // should create a card for each employee.
+  writeHTML(employees);
+}
 
 init();
 // end program
