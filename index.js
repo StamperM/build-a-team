@@ -8,55 +8,69 @@ const Engineer = require("./lib/Engineer");
 const questions = require("./lib/questions.js");
 const Manager = require("./lib/Manager.js");
 const prompt = inquirer.createPromptModule();
-const { renderEmployee, myTeamHeader } = require("./src/generateHTML")
-let htmlBody = "";
+
+
 inquirer.registerPrompt("loop", require("inquirer-loop")(inquirer));
 
-
-// write to the HTML file build the start content
 
 // collect employee information, store an array of employee object
 const employeeList = [];
 
 // will create new employees
 const newEmployee = (answers) => {
-  if (answers.defineRole === "Manager") {
-    const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
-    return employeeList.push(employee);
-  } else if (answers.defineRole === "Engineer") {
-    const employee = new Engineer(answers.name, answers.id, answers.email, answers.github);
-    return employeeList.push(employee);
-  } else if (answers.defineRole === "Intern") {
-    const employee = new Manager(answers.name, answers.id, answers.email, answers.office);
-    return employeeList.push(employee);
-  }
+  const employee = answers.defineRole === "Manager" ? 
+     new Manager(answers.name, answers.id, answers.email, answers.office) :
+    answers.defineRole === "Engineer" ? 
+    new Engineer(answers.name, answers.id, answers.email, answers.github):
+    answers.defineRole === "Intern" ?
+     new Manager(answers.name, answers.id, answers.email, answers.office):
+     null;
+     if(!employee){
+      throw Error("Not a valid role")
+    }
+     
+    return employee;
 
-}
-
+    }
 
 function html(employeeList) {
-  let basketball = employeeList.map(renderEmployee);
-let htmlBody=`${myTeamHeader} ${basketball}`
-writeHTML(htmlBody);
+  console.log("this",employeeList);
+  const myTeamHeader = `<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+  </head>
+  <body>
+      <nav><h1> My Team</h1></nav> <div class="container">`;
+  const endingHtml = `</body>
+  </html>`;
+  const  basketball = employeeList.map((employee) => employee.render()).join(" ");
+let htmlBody=`${myTeamHeader} ${basketball}${endingHtml}`;
+console.log(htmlBody);
 
+fs.writeFile("./dist/index.html", htmlBody, "utf8", err => {
+  if (err) {
+    console.log(err);
+
+  }
+})
 }
-
-function createHtml(employeeList){
-  employeeList.forEach((employee) =>{
-   console.log(employee);
-    html = renderEmployee(employeeList);
-    htmlBody =`${myTeamHeader}+ ${renderEmployee}`;
-  return htmlBody
-  });
- }
 
 // create a card for an engineer for the HTML template.
 function inquirerQuestions() {
   inquirer.prompt(questions).then(
     (answers) => {
-      // this will create an employee and and push it to the employee list.
-      answers.engineer.forEach(newEmployee);
-      console.log("this is the list", employeeList);
+
+      // employee.answers is the array of answers from Questions prompt. 
+      const employeeInfo = answers.employee;
+      console.log(employeeInfo);
+      // Uses the newEmployee funtion to create the employee list. 
+     const employeeList = employeeInfo.map(newEmployee)
+    console.log(employeeList);
+
       // should create a card for each employee.
       html(employeeList);
 
@@ -66,14 +80,12 @@ function inquirerQuestions() {
       
 
 
-const writeHTML= ()=>{
-  fs.writeFile("./dist/index.html", htmlBody, "utf8", err => {
-    if (err) {
-      console.log(err);
-}
+// const writeHTML= ()=>{
+ 
+// }
 
-  })
-}
+//   })
+// }
 
 
 
@@ -81,7 +93,7 @@ const writeHTML= ()=>{
 // start program
 function init() {
   inquirerQuestions();
-writeHTML()
+
 };
 
 init();
