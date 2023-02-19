@@ -17,6 +17,8 @@
 
   ## Desciption
  This project gave me the opprutinity to use all the skills that I learned in the first 10 modules of my bootcamp. And gives the user the chance to build an html document using prompts in the terminal.
+ 
+[Untitled_ Feb 18, 2023 5_21 PM.webm](https://user-images.githubusercontent.com/90412072/219973559-8c8de7bb-e3b9-4b75-9e27-ce6d0fa6e430.webm)
 
  
   ## Installation 
